@@ -12,12 +12,6 @@ contract Album is ERC721URIStorage {
 
     constructor() ERC721("Barbie", "BB") {
         owner = msg.sender;
-        createToken(
-            "ipfs://QmSXWBQwvvTjPY4tnTiY3edbJeqVqXobuxEqNP7PcyGEj8/metadata/0.json"
-        );
-        createToken(
-            "ipfs://QmSXWBQwvvTjPY4tnTiY3edbJeqVqXobuxEqNP7PcyGEj8/metadata/1.json"
-        );
     }
 
     function createToken(string memory tokenURI) public returns (uint) {
