@@ -4,30 +4,9 @@ require("@nomicfoundation/hardhat-ethers")
 require("@nomicfoundation/hardhat-chai-matchers")
 
 const MUMBAI_RPC_URL = process.env.MUMBAI_RPC_URL
-
-const PRIVATE_KEY = process.env.PRIVATE_KEY
-
-task("createNFT", "Creates an NFT")
-    .addParam("tokenuri", "The tokenuri for the NFT")
-    .setAction(async (taskArgs) => {
-        const { tokenuri } = taskArgs
-
-        const [deployer] = await ethers.getSigners()
-        console.log("Deploying NFT with account:", deployer.address)
-
-        const Contract = await ethers.getContractFactory("Album") // 替换为你的合约名称
-        const contract = await Contract.attach(
-            "0x032f3d5c544dAf8E98f1Cb639259f360a5a3Ca85"
-        ) // 替换为你的合约地址
-
-        try {
-            const tx = await contract.createToken(tokenuri)
-            await tx.wait()
-            console.log("NFT created successfully!")
-        } catch (error) {
-            console.error("Failed to create NFT:", error)
-        }
-    })
+const PRIVATE_KEY_ONE = process.env.PRIVATE_KEY_ONE
+const PRIVATE_KEY_TWO = process.env.PRIVATE_KEY_TWO
+const SEPOLIA_RPC_URL = process.env.SEPOLIA_RPC_URL
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -36,11 +15,16 @@ module.exports = {
         hardhat: {},
         mumbai: {
             url: MUMBAI_RPC_URL,
-            accounts: [PRIVATE_KEY],
+            accounts: [PRIVATE_KEY_ONE, PRIVATE_KEY_TWO],
             chainId: 80001,
         },
+        sepolia: {
+            url: SEPOLIA_RPC_URL,
+            accounts: [PRIVATE_KEY_ONE, PRIVATE_KEY_TWO],
+            chainId: 11155111,
+        },
         localhost: {
-            url: "http://localhost:8545",
+            url: "http://127.0.0.1:8545", //将 Hardhat 配置中的 localhost 网络的 URL 从 "http://localhost:8545" 改为 "http://127.0.0.1:8545"
             chainId: 31337,
         },
     },
